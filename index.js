@@ -160,7 +160,8 @@ const setCwd = (pid, action) => {
             }
         }
     } else {
-        exec(`lsof -p ${pid} | awk '$4=="cwd"' | tr -s ' ' | cut -d ' ' -f9-`, (err, stdout) => {
+        console.log(pid)
+        exec(`lsof -p ${pid} | grep cwd | tr -s ' ' | cut -d ' ' -f10-`, (err, stdout) => {
             cwd = stdout.trim();
             setGit(cwd);
         });
@@ -328,7 +329,6 @@ exports.decorateHyper = (Hyper, { React }) => {
 
 exports.middleware = (store) => (next) => (action) => {
     const uids = store.getState().sessions.sessions;
-
     switch (action.type) {
         case 'SESSION_SET_XTERM_TITLE':
             pid = uids[action.uid].pid;
