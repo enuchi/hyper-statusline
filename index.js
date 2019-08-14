@@ -160,7 +160,6 @@ const setCwd = (pid, action) => {
             }
         }
     } else {
-        console.log(pid)
         exec(`lsof -p ${pid} | grep cwd | tr -s ' ' | cut -d ' ' -f10-`, (err, stdout) => {
             cwd = stdout.trim();
             setGit(cwd);
